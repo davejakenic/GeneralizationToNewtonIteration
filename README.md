@@ -123,12 +123,13 @@ We actually developed the code to develop numerical schemes for linearly implici
 with M regular in a local neighborhood of the unique solution y(t).
 
 The below single-step method is of third order, with the attractive feature of only requiring one matrix factorization per single-step:
-linsolver.compute( func_M(y0,t0) );
-v1  = -linsolver.solve(                                              func_f(y0         ,t0      ) );
-v2  = -linsolver.solve( func_M(y0+h*2/3*v1     ,t0+h*2/3) *     v1 + func_f(y0+h*2/3*v1,t0+h*2/3) );
-v3  = -linsolver.solve( func_M(y0+h*2  *v1+h*v2,t0+h*4/3) * 2 * v2 + func_f(y0+h*4/3*v2,t0      ) );
-t   = t0 + h;
-y   = y0 + h/16 * (13*v1+18*v2+3*v3);
+
+1) linsolver.compute( func_M(y0,t0) );
+2) v1  = -linsolver.solve(                                              func_f(y0         ,t0      ) );
+3) v2  = -linsolver.solve( func_M(y0+h*2/3*v1     ,t0+h*2/3) *     v1 + func_f(y0+h*2/3*v1,t0+h*2/3) );
+4) v3  = -linsolver.solve( func_M(y0+h*2  *v1+h*v2,t0+h*4/3) * 2 * v2 + func_f(y0+h*4/3*v2,t0      ) );
+5) t   = t0 + h;
+6) y   = y0 + h/16 * (13*v1+18*v2+3*v3);
 
 # Appendix A: Order equations up to third Taylor term
 The residuals y_ab are for the b-th condition of the a-th order.
